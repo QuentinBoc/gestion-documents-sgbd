@@ -1,0 +1,81 @@
+.workshop-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.workshop-card p {
+  margin-bottom: 0;
+}
+
+.workshop-card h1 {
+  margin-bottom: 0;
+}
+
+.workshop-card-container {
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  .workshop-card {
+    width: 100%;
+    display: block;
+  }
+}
+
+.workshop-card {
+  box-sizing: border-box;
+  width: 33.33%;
+  margin: 20px auto;
+  padding: 10px 30px;
+  box-shadow: 4px 4px 20px lightgray;
+  border-radius: 5px;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+.formulaireModif{
+  &.editing {
+    form {
+      margin-top: 20px;
+      display: flex;
+      grid-template-columns: 1fr;
+      gap: 10px;
+     
+      
+
+     .common-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+input.common-input,
+textarea.common-input,
+select.common-input,
+option.common-input,
+button.common-input {
+  @extend .common-input;
+}
+
+
+      button[type="submit"],
+      button[type="button"] {
+        width: auto;
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+    }
+  }
+}
+
+}

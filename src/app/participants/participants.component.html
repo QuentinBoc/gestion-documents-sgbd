@@ -1,0 +1,12 @@
+<div class="list-container">
+  <h2>Liste des inscriptions</h2>
+<div *ngFor="let inscription of inscriptions | alphabeticalSort">
+  
+    <p>Nom du parent: {{ inscription.parentName }}</p>
+    <p>Téléphone: {{ inscription.phoneNumber }}</p>
+    <p>Email: {{ inscription.email }}</p>
+    <p>Nom de l'enfant: {{ inscription.childName }}</p>
+    <p>Date de naissance: {{ inscription.birthdate }}</p>
+    <button (click)="removeInscription(inscription.id)">Supprimer</button>
+  </div>
+</div>

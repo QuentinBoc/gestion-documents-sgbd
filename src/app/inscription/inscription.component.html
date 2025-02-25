@@ -1,0 +1,40 @@
+<div class="inscription-form">
+  <h1>Inscription à un atelier</h1>
+  <p></p>
+  <form [formGroup]="inscriptionForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="parentName">Nom du parent / responsable de l'enfant :</label>
+      <input id="parentName" type="text" formControlName="parentName" required>
+    </div>
+    <div>
+      <label for="phoneNumber">Téléphone :</label>
+      <input id="phoneNumber" type="number" formControlName="phoneNumber">
+    </div>
+    <div>
+      <label for="email">Email :</label>
+      <input id="email" type="email" formControlName="email">
+    </div>
+    <div>
+      <label for="childName">Nom de l'enfant :</label>
+      <input id="childName" type="text" formControlName="childName">
+    </div>
+ <div>
+  <label for="birthdate">Date de naissance</label>
+  <input id="birthdate" type="date" formControlName="birthdate" (change)="updateAgeLimitExceeded()" [min]="minBirthdate" [max]="maxBirthdate">
+  <div *ngIf="inscriptionForm.get('birthdate')?.hasError('ageLimitExceeded')" class="error-message">
+    La personne que vous souhaitez inscrire a plus de 12 ans. Ce n'est pas valide.
+  </div>
+</div>
+
+
+    <label for="title">Atelier</label>
+    <select formControlName="title" id="title">
+      <option *ngFor="let atelier of atelierOptions" [value]="atelier.value">{{ atelier.label }}</option>
+    </select>
+    <p></p>
+    <button type="submit">Enregistrer</button>
+  </form>
+</div>
+
+
+
