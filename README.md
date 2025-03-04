@@ -1,27 +1,55 @@
-# AngularKids
+# Gestion des Documents SGBD
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.0.
+## Principe de l'application
+Cette application permet de centraliser et de gérer des documents destinés aux professeurs et au personnel administratif d'une école. Elle offre une interface API qui permet d'ajouter, consulter, modifier et supprimer des documents, tout en les classant par catégories. Chaque document est stocké sur le serveur avec un lien direct à sa catégorie, facilitant ainsi son organisation et son accès.
 
-## Development server
+## Contexte d'utilisation
+L'application est conçue pour un usage interne au sein d'un établissement scolaire. Elle permet aux enseignants et au personnel administratif de retrouver rapidement les documents nécessaires, comme des formulaires, notes, guides et autres ressources essentielles. L'ajout de catégories dynamiques permet de mieux organiser les fichiers sans intervention manuelle sur la base de données.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Installation et Démarrage
 
-## Code scaffolding
+### Prérequis
+- Node.js (v20+)
+- MongoDB (Docker recommandé)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+L'API sera disponible sur `http://localhost:3000`.
 
-## Build
+## Routes disponibles
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Récupérer tous les documents avec leur catégorie
+```http
+GET /documents/with-category
+```
 
-## Running unit tests
+### Ajouter un document avec fichier
+- **Méthode :** `POST`
+- **URL :** `/documents`
+- **Données (`form-data`) :**  
+  - `file` (PDF, DOCX...)  
+  - `title` (nom du document)  
+  - `categoryName` (nom de la catégorie)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Mettre à jour un document
+- **Méthode :** `PUT`
+- **URL :** `/documents/:id`
+- **Body (JSON) :**
+```json
+{
+  "title": "Nouveau titre",
+  "categoryName": "Nouvelle catégorie"
+}
+```
 
-## Running end-to-end tests
+### Supprimer un document
+```http
+DELETE /documents/:id
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Évolutions possibles
+Si le développement de l'application est poursuivi, notamment dans le cadre d'un Travail de Fin d'Études (TFE), une amélioration envisageable serait l'intégration d'un gestionnaire d'authentification. Une fédération avec **Entra ID** pourrait être mise en place, permettant une authentification centralisée via **Microsoft 365**, ce qui s'inscrit dans une logique d'intégration avec les outils déjà utilisés par l'établissement.
 
-## Further help
+## Remarque
+Ce projet a été conçu pour un usage local et peut être amélioré avec une interface utilisateur.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Auteur
+Projet réalisé par Quentin, dans le cadre du développement SGBD.
