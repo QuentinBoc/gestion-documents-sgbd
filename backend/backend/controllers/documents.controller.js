@@ -21,16 +21,7 @@ const upload = multer({ storage: storage });
 // Récupérer tous les documents avec leur catégorie
 exports.findAllWithCategory = async (req, res) => {
     try {
-        const documents = await Document.aggregate([
-            {
-                $lookup: {
-                    from: "categories",
-                    localField: "categoryId",
-                    foreignField: "_id",
-                    as: "category"
-                }
-            }
-        ]);
+        const documents = await getAllDocuments(); // Appel du service
         res.status(200).json(documents);
     } catch (error) {
         res.status(500).json({ message: "Erreur serveur", error });
