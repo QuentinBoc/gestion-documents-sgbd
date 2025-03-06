@@ -5,8 +5,14 @@ const Document = require('../models/document.model');
 const Category = require('../models/category.model');
 const documentController = require('../controllers/documents.controller');
 
-router.get('/with-category', documentController.findAllWithCategory);
-
+router.get('/', async (req, res) => {
+    try {
+        const documents = await Document.find();
+        res.status(200).json(documents);
+    } catch (error) {
+        res.status(500).json({ message: "Erreur serveur lors de la récupération des documents." });
+    }
+});
 // Configuration du stockage des fichiers avec Multer
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, 'uploads/'),
