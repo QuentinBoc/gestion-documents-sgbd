@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
+const errorHandler = require('./middlewares/errorHandler');
 
 console.log("Démarrage du serveur...");
 
@@ -24,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 
 console.log("Middleware chargé...");
 
-// Importation des routes après activation des middlewares
+// Importation des routes 
 try {
     console.log("Chargement des routes...");
     const documentsRouter = require('./routes/documents');
@@ -37,6 +38,9 @@ try {
     console.error("Erreur lors du chargement des routes :", error);
     process.exit(1);
 }
+
+// Middleware de gestion global des erreurs
+app.use(errorHandler);
 
 // Démarrer le serveur
 const PORT = 3000;
