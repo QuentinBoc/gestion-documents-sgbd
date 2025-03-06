@@ -3,6 +3,8 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const Category = require('../models/category.model');
+const documentSchema = require('../validations/document.validation');
+const { error } = require('console');
 
 // Configuration de Multer pour l'upload
 const uploadPath = path.join(__dirname, '../uploads');
@@ -39,16 +41,26 @@ exports.findAllWithCategory = async (req, res) => {
 exports.findOne = async (req, res) => {
     try {
         const document = await Document.findById(req.params.id);
-        if (!document) return res.status(404).json({ message: 'Document non trouvé' });
+        if (!document) {
+            const error = new Error("Document non trouvé");
+            error.status = 404;
+            throw error;
+        }
         res.json(document);
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        next(err);
     }
 };
 
 // Ajouter un document
 exports.create = async (req, res) => {
     try {
+        // Validation des données reçues
+        const { error } = documentSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message });
+        }
+
         if (!req.file) return res.status(400).json({ message: 'Aucun fichier envoyé' });
 
         let categoryId = null;

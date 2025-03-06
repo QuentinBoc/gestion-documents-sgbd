@@ -1,13 +1,18 @@
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
+const errorHandler = require('./middlewares/errorHandler');
+
+require('dotenv').config();
 
 console.log("Démarrage du serveur...");
 
 // Connexion à MongoDB
-console.log("Connexion à MongoDB...");
-mongoose.connect('mongodb://localhost:27017/gestion-docs', {
+const MONGO_URI = process.env.MONGO_URI;
+console.log(`Connexion à MongoDB sur ${MONGO_URI}...`);
+mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
@@ -24,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 
 console.log("Middleware chargé...");
 
-// Importation des routes après activation des middlewares
+// Importation des routes 
 try {
     console.log("Chargement des routes...");
     const documentsRouter = require('./routes/documents');
@@ -37,6 +42,9 @@ try {
     console.error("Erreur lors du chargement des routes :", error);
     process.exit(1);
 }
+
+// Middleware de gestion global des erreurs
+app.use(errorHandler);
 
 // Démarrer le serveur
 const PORT = 3000;
